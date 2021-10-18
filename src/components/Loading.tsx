@@ -3,6 +3,11 @@ import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
 import Loader from './generic/Loader'
 
+// types
+type Props = {
+  label: string,
+}
+
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
   root: {
@@ -26,14 +31,14 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   },
 }), { name: 'Loading' })
 
-const Loading = (): JSX.Element => {
+const Loading = ({ label }: Props): JSX.Element => {
   const classes = useStyles()
 
   return (
     <div className={classes.root} >
       <Loader />
       <div className={classes.typography} >
-        Please wait while we load
+        {label}
       </div>
     </div>
   )

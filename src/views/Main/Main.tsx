@@ -1,10 +1,13 @@
 import React from 'react'
+import ProtectedRoute from '../../ProtectedRoute'
 
 
 const Main = (): JSX.Element => (
-  <div>
-    main
-  </div>
+  <ProtectedRoute>
+    <div>
+      Main
+    </div>
+  </ProtectedRoute>
 )
 
 export default Main
