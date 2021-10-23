@@ -3,9 +3,11 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 import './App.css'
+import { Box } from '@mui/system'
 import Loading from './components/Loading'
-import Main from './views/Main/Main'
+import Home from './views/Home/Home'
 import ErrorPage from './components/Error'
+import NavBar from './components/NavBar'
 
 const MainRouter = (): JSX.Element => {
   const { isLoading, error } = useAuth0()
@@ -20,17 +22,17 @@ const MainRouter = (): JSX.Element => {
 
   return (
     <Router>
-      <div>
-        {/* <NavBar /> */}
-        <div>
+      <Box sx={{ paddingLeft: 2, paddingRight: 2 }} >
+        <NavBar />
+        <div >
           <Switch>
-            <Route path="/" exact component={Main} />
+            <Route path="/home" exact component={Home} />
             <Route>
-              <Redirect to="/" />
+              <Redirect to="/home" />
             </Route>
           </Switch>
         </div>
-      </div>
+      </Box>
     </Router>
   )
 }
