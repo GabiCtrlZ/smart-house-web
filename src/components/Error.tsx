@@ -20,9 +20,9 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
     zIndex: 1,
   },
   img: {
-    width: 160,
+    width: 130,
     '@media (min-width: 780px)': {
-      width: 230,
+      width: 200,
     }
   },
   typography: {

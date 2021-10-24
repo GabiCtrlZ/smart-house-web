@@ -22,7 +22,7 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   agentFlow: {
     overflowX: 'scroll',
     padding: `5px ${spacing(2)}`,
-    width: '100vw',
+    width: 'min(100vw, 480px)',
     transform: `translateX(-${spacing(2)})`,
   },
   subHeaderContainer: {
@@ -38,7 +38,47 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
     color: '#4385ff',
     cursor: 'pointer',
   },
-}), { name: 'Menu' })
+}), { name: 'Home' })
+
+// dummy state
+type agentType = {
+  id: string,
+  type: 'ac' | 'light',
+  room: string,
+  on: boolean,
+  switched: string,
+}
+
+const agents: agentType[] = [
+  {
+    id: '1',
+    type: 'ac',
+    room: '1',
+    on: true,
+    switched: '2021-10-24T07:14:00.000Z',
+  },
+  {
+    id: '2',
+    type: 'light',
+    room: '1',
+    on: true,
+    switched: '2021-10-24T07:17:00.000Z',
+  },
+  {
+    id: '3',
+    type: 'ac',
+    room: '2',
+    on: true,
+    switched: '2021-10-24T08:29:00.000Z',
+  },
+  {
+    id: '4',
+    type: 'light',
+    room: '2',
+    on: false,
+    switched: '2021-10-23T06:34:00.000Z',
+  },
+]
 
 const Home = (): JSX.Element => {
   const classes = useStyles()
@@ -56,11 +96,11 @@ const Home = (): JSX.Element => {
           <div className={classNames(classes.subHeader, classes.seeAll)} >See All</div>
         </div>
         <div className={classNames(classes.agentContainer, classes.agentFlow)} >
-          <AgentCard size={45} type="ac" time={new Date('2021-10-23T06:34:00.000Z')} />
-          <AgentCard size={45} type="light" time={new Date('2021-10-23')} />
-          <AgentCard size={45} type="ac" time={new Date('2021-10-23')} />
+          {agents.filter(agent => agent.on).map(({ id, type, switched, on }) => (
+            <AgentCard key={id} size={45} type={type} time={new Date(switched)} on={on} />
+          ))}
         </div>
-        <UsageSummary acNum={1} acTime={new Date('2021-10-23')} lightNum={3} lightTime={new Date()} />
+        <UsageSummary size={45} units={456} />
       </div>
     </ProtectedRoute>
   )

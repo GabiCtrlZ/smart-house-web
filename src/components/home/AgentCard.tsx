@@ -11,6 +11,7 @@ interface Props {
   size: number,
   type: 'ac' | 'light',
   time: Date,
+  on: boolean,
   onClick?: () => void,
 }
 
@@ -35,7 +36,8 @@ const useStyles = makeStyles(({ palette }: Theme) => ({
     background: 'white',
     borderRadius: 18,
     padding: 20,
-    minWidth: 162,
+    // minWidth: 'max(45%, 162px)',
+    width: '45%',
     justifyContent: 'space-between',
     height: '21vh',
     boxShadow: '0px 0px 5px 1px rgb(173 173 173)',
@@ -65,22 +67,23 @@ const AgentCard = (props: Props): JSX.Element => {
   const {
     type,
     time,
+    on,
     onClick = () => { }, // eslint-disable-line
   } = props
 
   return (
     <div className={classes.root} >
       <img src={types[type].icon} alt={type} className={classes.logo} onClick={onClick} />
-      <div>{types[type].name}</div>
+      <div style={{ fontWeight: 'bold' }} >{types[type].name}</div>
       <div
         className={classes.time}
       >
-        On for last {secondsHours(Math.floor((new Date().getTime() - time.getTime()) / 1000))}
+        {on ? 'On' : 'Off'} for {secondsHours(Math.floor((new Date().getTime() - time.getTime()) / 1000))}
       </div>
       <div>
-        <PowerSettingsNewIcon color="warning" />
+        <PowerSettingsNewIcon color={on ? 'warning' : 'disabled'} />
       </div>
-      <div className={classes.onLight} />
+      {on && <div className={classes.onLight} />}
     </div>
   )
 }

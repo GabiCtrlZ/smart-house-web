@@ -8,6 +8,7 @@ import Loading from './components/Loading'
 import Home from './views/Home/Home'
 import ErrorPage from './components/Error'
 import NavBar from './components/NavBar'
+import Agents from './views/Agents/Agents'
 
 const MainRouter = (): JSX.Element => {
   const { isLoading, error } = useAuth0()
@@ -22,11 +23,12 @@ const MainRouter = (): JSX.Element => {
 
   return (
     <Router>
-      <Box sx={{ paddingLeft: 2, paddingRight: 2 }} >
+      <Box sx={{ paddingLeft: 2, paddingRight: 2, maxWidth: 480 }} >
         <NavBar />
         <div >
           <Switch>
             <Route path="/home" exact component={Home} />
+            <Route path="/agents" exact component={Agents} />
             <Route>
               <Redirect to="/home" />
             </Route>

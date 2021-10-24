@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material'
-import secondsClock from '../../utils/seconds-clock'
+import { Box } from '@mui/system'
+import { Button } from '@mui/material'
+import ccMachineImg from '../../assets/icons/cc-machine.png'
+import billImg from '../../assets/icons/bill.png'
 
 // types
 interface Props {
-  acTime: Date,
-  acNum: number,
-  lightTime: Date,
-  lightNum: number,
+  units: number,
+  size: number,
 }
 
 // style
-const useStyles = makeStyles(({ palette }: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,79 +20,60 @@ const useStyles = makeStyles(({ palette }: Theme) => ({
     background: 'white',
     borderRadius: 18,
     padding: 20,
-    width: '100%',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     height: '21vh',
     boxShadow: '0px 0px 5px 1px rgb(173 173 173)',
     position: 'relative',
   },
-  container: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
+  logo: {
+    width: ({ size }: { size: number }) => size,
+    height: ({ size }: { size: number }) => size,
   },
-  infoContainer: {
+  rowContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  textContainer: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
   },
-  num: {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-  },
-  text: {
-    color: palette.text.secondary,
-    fontWeight: 'bold',
-  },
-  time: {
-    color: '#16d516',
-    fontWeight: 'bold',
-    fontSize: '0.8rem',
-  },
-}), { name: 'UsageSummary' })
+}), { name: 'AgentCard' })
 
-const UsageSummary = (props: Props): JSX.Element => {
+const AgentCard = (props: Props): JSX.Element => {
   const classes = useStyles(props)
   const {
-    acNum,
-    acTime,
-    lightNum,
-    lightTime,
+    units,
   } = props
-
-  const [realAcTime, setRealAcTime] = useState(Math.floor((new Date().getTime() - acTime.getTime()) / 1000))
-  const [realLightTime, setRealLightTime] = useState(Math.floor((new Date().getTime() - lightTime.getTime()) / 1000))
-
-  useEffect(() => {
-    const interval = setInterval(
-      () => {
-        setRealAcTime((prev) => prev + 1)
-        setRealLightTime((prev) => prev + 1)
-      },
-      1000
-    )
- 
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
 
   return (
     <div className={classes.root} >
-      <h3 style={{ margin: 0 }} >Evening Mode ON</h3 >
-      <div className={classes.container} >
-        <div className={classes.infoContainer} >
-          <div className={classes.num} >{acNum}</div>
-          <div className={classes.text} >Air conditioners</div>
-          <div className={classes.time} >{secondsClock(realAcTime)}</div>
-        </div>
-        <div className={classes.infoContainer} >
-          <div className={classes.num} >{lightNum}</div>
-          <div className={classes.text} >House Lights</div>
-          <div className={classes.time} >{secondsClock(realLightTime)}</div>
-        </div>
+      <div className={classes.rowContainer} >
+        <Box sx={{ display: 'flex' }} >
+          <img src={ccMachineImg} alt="cc-machine" className={classes.logo} />
+          <Box sx={{ marginLeft: 1 }} className={classes.textContainer} >
+            <Box sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} >January 19 Bill</Box>
+            <Box sx={{ fontSize: '0.8rem', color: 'text.secondary' }} >Due in: 6 days</Box>
+          </Box>
+        </Box>
+        <Box sx={{ alignItems: 'center' }} className={classes.textContainer} >
+          <Box sx={{ fontWeight: 'bold', fontSize: '1.25rem' }} >{units}</Box>
+          <Box sx={{ fontSize: '0.65rem', color: 'text.secondary' }}>Units</Box>
+        </Box>
+      </div>
+      <div className={classes.rowContainer} >
+        <Box sx={{ display: 'flex' }} >
+          <img src={billImg} alt="bill" className={classes.logo} />
+          <Box sx={{ marginLeft: 1 }} className={classes.textContainer} >
+            <Box sx={{ fontWeight: 'bold', fontSize: '0.9rem', color: 'text.secondary' }} >Estimated bill: </Box>
+            <Box sx={{ fontWeight: 'bold', fontSize: '0.8rem', color: 'primary.main' }} >400 ₪</Box>
+          </Box>
+        </Box>
+        <Button variant="contained" color="secondary" sx={{ fontWeight: 'bold' }} >View Usage</Button>
       </div>
     </div>
   )
 }
 
-export default UsageSummary
+export default AgentCard
