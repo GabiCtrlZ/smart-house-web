@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme, Typography } from '@mui/material'
 import classNames from 'classnames'
+import { useHistory } from 'react-router'
 import ProtectedRoute from '../../ProtectedRoute'
 import AgentCard from '../../components/home/AgentCard'
 import Summary from '../../components/home/Summary'
@@ -12,6 +13,10 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    animationName: 'fadeIn',
+    animationDuration: '0.5s',
+    animationFillMode: 'forwards',
+    animationTimingFunction: 'ease-in-out',
   },
   agentContainer: {
     display: 'flex',
@@ -82,6 +87,7 @@ const agents: agentType[] = [
 
 const Home = (): JSX.Element => {
   const classes = useStyles()
+  const history = useHistory()
 
   return (
     <ProtectedRoute>
@@ -93,11 +99,23 @@ const Home = (): JSX.Element => {
         </div>
         <div className={classes.subHeaderContainer} >
           <div className={classes.subHeader} >Running appliances</div>
-          <div className={classNames(classes.subHeader, classes.seeAll)} >See All</div>
+          <div
+            className={classNames(classes.subHeader, classes.seeAll)}
+            onClick={() => history.push('/agents')}
+          >
+            See All
+          </div>
         </div>
         <div className={classNames(classes.agentContainer, classes.agentFlow)} >
           {agents.filter(agent => agent.on).map(({ id, type, switched, on }) => (
-            <AgentCard key={id} size={45} type={type} time={new Date(switched)} on={on} />
+            <AgentCard
+              key={id}
+              size={45}
+              type={type}
+              time={new Date(switched)}
+              on={on}
+              onClick={() => history.push(`/agent/${id}`)}
+            />
           ))}
         </div>
         <UsageSummary size={45} units={456} />

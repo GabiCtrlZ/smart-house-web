@@ -23,7 +23,7 @@ const useStyles = makeStyles(({ palette }: Theme) => ({
     width: '100%',
     justifyContent: 'space-around',
     height: '21vh',
-    boxShadow: '0px 0px 5px 1px rgb(173 173 173)',
+    boxShadow: '0px 0px 12px 1px rgb(199 207 239)',
     position: 'relative',
   },
   container: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles(({ palette }: Theme) => ({
     fontWeight: 'bold',
   },
   time: {
-    color: '#16d516',
+    color: palette.primary.light,
     fontWeight: 'bold',
     fontSize: '0.8rem',
   },

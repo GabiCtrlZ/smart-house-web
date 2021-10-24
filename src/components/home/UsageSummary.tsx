@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
     padding: 20,
     justifyContent: 'space-between',
     height: '21vh',
-    boxShadow: '0px 0px 5px 1px rgb(173 173 173)',
+    boxShadow: '0px 0px 12px 1px rgb(199 207 239)',
     position: 'relative',
   },
   logo: {

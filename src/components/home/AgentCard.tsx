@@ -36,11 +36,11 @@ const useStyles = makeStyles(({ palette }: Theme) => ({
     background: 'white',
     borderRadius: 18,
     padding: 20,
-    // minWidth: 'max(45%, 162px)',
-    width: '45%',
+    minWidth: 'max(45%, 162px)',
+    cursor: 'pointer',
     justifyContent: 'space-between',
     height: '21vh',
-    boxShadow: '0px 0px 5px 1px rgb(173 173 173)',
+    boxShadow: '0px 0px 5px 1px rgb(199 207 239)',
     position: 'relative',
   },
   logo: {
@@ -72,8 +72,8 @@ const AgentCard = (props: Props): JSX.Element => {
   } = props
 
   return (
-    <div className={classes.root} >
-      <img src={types[type].icon} alt={type} className={classes.logo} onClick={onClick} />
+    <div className={classes.root} onClick={onClick} >
+      <img src={types[type].icon} alt={type} className={classes.logo} />
       <div style={{ fontWeight: 'bold' }} >{types[type].name}</div>
       <div
         className={classes.time}
