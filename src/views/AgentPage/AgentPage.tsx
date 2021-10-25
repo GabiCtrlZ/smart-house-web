@@ -34,6 +34,7 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '80%',
+    minWidth: 285,
   },
 }), { name: 'AgentPage' })
 
