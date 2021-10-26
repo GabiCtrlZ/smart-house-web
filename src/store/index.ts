@@ -11,12 +11,14 @@ export const tokenState = atom({
   default: '',
 })
 
-export const infoValue = selector({
-  key: 'infoValue',
+export const agentsMetrics = selector({
+  key: 'agentsMetrics',
   get: ({ get }) => ({
     total: get(agentsState).length,
     active: get(agentsState).filter((agent) => agent.active).length,
-    airConditioners: get(agentsState).filter((agent) => agent.type === 'ac').length,
-    lights: get(agentsState).filter((agent) => agent.type === 'light').length,
+    airConditioners: get(agentsState).filter((agent) => agent.type === 'ac'),
+    activeAC: get(agentsState).filter((agent) => agent.type === 'ac').filter((agent) => agent.active),
+    lights: get(agentsState).filter((agent) => agent.type === 'light'),
+    activeLights: get(agentsState).filter((agent) => agent.type === 'light').filter((agent) => agent.active),
   }),
 })

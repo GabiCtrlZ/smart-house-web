@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { makeStyles } from '@mui/styles'
 import { Theme, Typography } from '@mui/material'
 import { Box } from '@mui/system'
@@ -10,7 +10,10 @@ import offAcImg from '../../assets/icons/off-ac.png'
 import offLightImg from '../../assets/icons/off-light-bulb.png'
 import MainButton from '../../components/agentPage/MainButton'
 import secondsClock from '../../utils/seconds-clock'
-import { agentsState } from '../../store'
+import { agentsState, tokenState } from '../../store'
+import { SERVER_URL } from '../../consts'
+import LoadingDialog from '../../components/agentPage/LoadingDialog'
+import AirCanvas from '../../components/generic/AirCanvas'
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -57,7 +60,9 @@ const types = {
 const AgentPage = (): JSX.Element => {
   const classes = useStyles()
   const history = useHistory()
-  const agents = useRecoilValue(agentsState)
+  const [agents, setAgents] = useRecoilState(agentsState)
+  const [loading, setLoading] = useState(false)
+  const token = useRecoilValue(tokenState)
   const id = window.location.pathname.split('/')[2]
   const agent = agents.find(a => a._id === id)
 
@@ -65,6 +70,35 @@ const AgentPage = (): JSX.Element => {
 
   const time = new Date(switched)
   const [realTime, setRealTime] = useState(Math.floor((new Date().getTime() - time.getTime()) / 1000))
+
+  useEffect(() => {
+    const newTime = new Date(switched)
+
+    setRealTime(Math.floor((new Date().getTime() - newTime.getTime()) / 1000))
+  }, [switched])
+
+  const switchAgentState = async (): Promise<void> => {
+    setLoading(true)
+    try {
+      const answer = await fetch(`${SERVER_URL}/agents/switch`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      })
+      const data = await answer.json()
+      const { active, switched } = data
+
+      setAgents(agents.map(a => a._id === id ? { ...a, active, switched } : a))
+    } catch (e) {
+      console.log(e)
+    }
+    setLoading(false)
+  }
 
   useEffect(() => {
     const interval = setInterval(
@@ -94,14 +128,16 @@ const AgentPage = (): JSX.Element => {
           <h2>{agent.room}</h2>
           <Typography variant="h3" >{types[agent.type].name}</Typography>
         </Box>
-        <img
-          src={agent.active ? types[agent.type].image : types[agent.type].offImage}
-          alt={agent.type} className={classes.logo}
-        />
+        {agent.type === 'light' && (
+          <img
+            src={agent.active ? types[agent.type].image : types[agent.type].offImage}
+            alt={agent.type} className={classes.logo}
+          />)}
+        {agent.type === 'ac' && (<AirCanvas active={agent.active} />)}
         <div className={classes.buttonsContainer} >
           <MainButton isTimer onClick={() => history.push(`/timer/${id}`)} />
           <Box sx={{ fontWeight: 'bold', width: '110px' }} >Power Saving Mode</Box>
-          <MainButton active={agent.active} />
+          <MainButton active={agent.active} onClick={switchAgentState} />
         </div>
         <Box sx={{ marginBottom: 2 }} >
           <Box sx={{ fontWeight: 'bold', }}>{agent.active ? 'On' : 'Off'} for the last</Box>
@@ -114,6 +150,7 @@ const AgentPage = (): JSX.Element => {
             Save more on {types[agent.type].name} by using our timer settings
           </Box>
         </Box>
+        <LoadingDialog open={loading} />
       </div>
     </>
   )

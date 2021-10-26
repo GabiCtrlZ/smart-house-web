@@ -9,6 +9,15 @@ import Summary from '../../components/home/Summary'
 import UsageSummary from '../../components/home/UsageSummary'
 import { agentsState } from '../../store'
 import NoActiveAgents from '../../components/home/NoActiveAgents'
+import { agentsMetrics } from '../../store/index'
+import { agentType } from '../../@types'
+
+const getRightTime = (state: agentType[], fallbackState: agentType[]): Date => {
+  if (state[0]) return new Date(state[0].switched)
+  if (fallbackState[0]) return new Date(fallbackState[0].switched)
+
+  return new Date()
+}
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -51,6 +60,7 @@ const Home = (): JSX.Element => {
   const classes = useStyles()
   const history = useHistory()
   const agents = useRecoilValue(agentsState)
+  const metrics = useRecoilValue(agentsMetrics)
 
   return (
     <>
@@ -58,7 +68,12 @@ const Home = (): JSX.Element => {
         <h2>Good evening Gabi!</h2>
         <Typography variant="h3" >Welcome home</Typography>
         <div className={classes.agentContainer} >
-          <Summary acNum={1} acTime={new Date('2021-10-23')} lightNum={3} lightTime={new Date()} />
+          <Summary
+            acNum={metrics.activeAC.length}
+            acTime={getRightTime(metrics.activeAC, metrics.airConditioners)}
+            lightNum={metrics.activeLights.length}
+            lightTime={getRightTime(metrics.activeLights, metrics.lights)}
+          />
         </div>
         <div className={classes.subHeaderContainer} >
           <div className={classes.subHeader} >Running appliances</div>

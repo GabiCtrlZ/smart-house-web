@@ -63,6 +63,11 @@ const Summary = (props: Props): JSX.Element => {
   const [realLightTime, setRealLightTime] = useState(Math.floor((new Date().getTime() - lightTime.getTime()) / 1000))
 
   useEffect(() => {
+    setRealAcTime(Math.floor((new Date().getTime() - acTime.getTime()) / 1000))
+    setRealLightTime(Math.floor((new Date().getTime() - lightTime.getTime()) / 1000))
+  }, [acTime, lightTime])
+
+  useEffect(() => {
     const interval = setInterval(
       () => {
         setRealAcTime((prev) => prev + 1)

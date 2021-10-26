@@ -1,6 +1,13 @@
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 
+// types
+type Props = {
+  style?: {
+    margin?: number
+  }
+}
+
 const animationDelays = [
   '0s',
   '-1.4285714286s',
@@ -120,11 +127,11 @@ const useStyles = makeStyles(() => ({
   },
 }), { name: 'Loader' })
 
-function Loader(): JSX.Element {
+function Loader({ style }: Props): JSX.Element {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={style} >
       <div className={classes.loading}>
         {animationDelays.map((e) => (
           <div key={e} className={classes.loaderSquare} style={{ animationDelay: e }} />
