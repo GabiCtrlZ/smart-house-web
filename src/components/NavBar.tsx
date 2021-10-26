@@ -38,9 +38,8 @@ const NavBar = (): JSX.Element => {
 
   useEffect(() => {
     return history.listen((location) => {
-      const id = window.location.pathname.split('/')[2]
+      const id = location.pathname.split('/')[2]
 
-      console.log(`You changed the page to: ${location.pathname}`)
       if (id) setBack(true)
       else setBack(false)
     })
