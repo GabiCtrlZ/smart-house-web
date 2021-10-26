@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import { Button } from '@mui/material'
+import { useHistory } from 'react-router'
 import ccMachineImg from '../../assets/icons/cc-machine.png'
 import billImg from '../../assets/icons/bill.png'
 
@@ -43,6 +44,7 @@ const useStyles = makeStyles(() => ({
 
 const AgentCard = (props: Props): JSX.Element => {
   const classes = useStyles(props)
+  const history = useHistory()
   const {
     units,
   } = props
@@ -70,7 +72,14 @@ const AgentCard = (props: Props): JSX.Element => {
             <Box sx={{ fontWeight: 'bold', fontSize: '0.8rem', color: 'primary.main' }} >400 ₪</Box>
           </Box>
         </Box>
-        <Button variant="contained" color="secondary" sx={{ fontWeight: 'bold' }} >View Usage</Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ fontWeight: 'bold' }}
+          onClick={() => history.push('/usage')}
+        >
+          View Usage
+        </Button>
       </div>
     </div>
   )

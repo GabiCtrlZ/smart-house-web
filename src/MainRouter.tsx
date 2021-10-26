@@ -10,6 +10,7 @@ import ErrorPage from './components/Error'
 import NavBar from './components/NavBar'
 import Agents from './views/Agents/Agents'
 import AgentPage from './views/AgentPage/AgentPage'
+import Usage from './views/Usage/Usage'
 
 const MainRouter = (): JSX.Element => {
   const { isLoading, error } = useAuth0()
@@ -31,6 +32,7 @@ const MainRouter = (): JSX.Element => {
             <Route path="/home" exact component={Home} />
             <Route path="/agents" exact component={Agents} />
             <Route path="/agent/:id" exact component={AgentPage} />
+            <Route path="/usage" exact component={Usage} />
             <Route>
               <Redirect to="/home" />
             </Route>

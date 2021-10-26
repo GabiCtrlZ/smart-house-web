@@ -1,0 +1,1 @@
+export default (seconds: number): number => Math.floor(seconds / 60)

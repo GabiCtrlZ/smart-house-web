@@ -7,6 +7,7 @@ import ProtectedRoute from '../../ProtectedRoute'
 import AgentCard from '../../components/home/AgentCard'
 import Summary from '../../components/home/Summary'
 import UsageSummary from '../../components/home/UsageSummary'
+import agents from '../../utils/agents'
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -44,46 +45,6 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
     cursor: 'pointer',
   },
 }), { name: 'Home' })
-
-// dummy state
-type agentType = {
-  id: string,
-  type: 'ac' | 'light',
-  room: string,
-  on: boolean,
-  switched: string,
-}
-
-const agents: agentType[] = [
-  {
-    id: '1',
-    type: 'ac',
-    room: '1',
-    on: true,
-    switched: '2021-10-24T07:14:00.000Z',
-  },
-  {
-    id: '2',
-    type: 'light',
-    room: '1',
-    on: true,
-    switched: '2021-10-24T07:17:00.000Z',
-  },
-  {
-    id: '3',
-    type: 'ac',
-    room: '2',
-    on: true,
-    switched: '2021-10-24T08:29:00.000Z',
-  },
-  {
-    id: '4',
-    type: 'light',
-    room: '2',
-    on: false,
-    switched: '2021-10-23T06:34:00.000Z',
-  },
-]
 
 const Home = (): JSX.Element => {
   const classes = useStyles()
