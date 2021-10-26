@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
-import { Button } from '@mui/material'
+import { Button, Theme } from '@mui/material'
 import { useHistory } from 'react-router'
 import ccMachineImg from '../../assets/icons/cc-machine.png'
 import billImg from '../../assets/icons/bill.png'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 // style
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ spacing }: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,9 +22,10 @@ const useStyles = makeStyles(() => ({
     borderRadius: 18,
     padding: 20,
     justifyContent: 'space-between',
-    height: '21vh',
+    height: '20vh',
     boxShadow: '0px 0px 12px 1px rgb(199 207 239)',
     position: 'relative',
+    marginTop: spacing(2),
   },
   logo: {
     width: ({ size }: { size: number }) => size,
@@ -55,8 +56,8 @@ const AgentCard = (props: Props): JSX.Element => {
         <Box sx={{ display: 'flex' }} >
           <img src={ccMachineImg} alt="cc-machine" className={classes.logo} />
           <Box sx={{ marginLeft: 1 }} className={classes.textContainer} >
-            <Box sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} >January 19 Bill</Box>
-            <Box sx={{ fontSize: '0.8rem', color: 'text.secondary' }} >Due in: 6 days</Box>
+            <Box sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} >November 10 Bill</Box>
+            <Box sx={{ fontSize: '0.8rem', color: 'text.secondary' }} >Due in: 15 days</Box>
           </Box>
         </Box>
         <Box sx={{ alignItems: 'center' }} className={classes.textContainer} >

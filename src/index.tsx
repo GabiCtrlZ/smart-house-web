@@ -4,7 +4,7 @@ import { Auth0Provider } from '@auth0/auth0-react'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import AppProviders from './AppProviders'
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, REDIRECT_URI } from './consts'
+import { AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN, REDIRECT_URI } from './consts'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,6 +12,7 @@ ReactDOM.render(
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       redirectUri={REDIRECT_URI || window.location.origin}
+      audience={AUDIENCE}
     >
       <AppProviders />
     </Auth0Provider>
