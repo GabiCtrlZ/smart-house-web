@@ -1,13 +1,14 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 import { makeStyles } from '@mui/styles'
 import { Theme, Typography } from '@mui/material'
 import classNames from 'classnames'
 import { useHistory } from 'react-router'
-import ProtectedRoute from '../../ProtectedRoute'
 import AgentCard from '../../components/home/AgentCard'
 import Summary from '../../components/home/Summary'
 import UsageSummary from '../../components/home/UsageSummary'
-import agents from '../../utils/agents'
+import { agentsState } from '../../store'
+import NoActiveAgents from '../../components/home/NoActiveAgents'
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -49,9 +50,10 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
 const Home = (): JSX.Element => {
   const classes = useStyles()
   const history = useHistory()
+  const agents = useRecoilValue(agentsState)
 
   return (
-    <ProtectedRoute>
+    <>
       <div className={classes.root} >
         <h2>Good evening Gabi!</h2>
         <Typography variant="h3" >Welcome home</Typography>
@@ -68,20 +70,23 @@ const Home = (): JSX.Element => {
           </div>
         </div>
         <div className={classNames(classes.agentContainer, classes.agentFlow)} >
-          {agents.filter(agent => agent.on).map(({ id, type, switched, on }) => (
+          {agents.filter(agent => agent.active).map(({ _id, type, switched, active }) => (
             <AgentCard
-              key={id}
+              key={_id}
               size={45}
               type={type}
               time={new Date(switched)}
-              on={on}
-              onClick={() => history.push(`/agent/${id}`)}
+              active={active}
+              onClick={() => history.push(`/agent/${_id}`)}
             />
           ))}
+          {!agents.filter(agent => agent.active).length && (
+            <NoActiveAgents size={45} />
+          )}
         </div>
         <UsageSummary size={45} units={456} />
       </div>
-    </ProtectedRoute>
+    </>
   )
 }
 

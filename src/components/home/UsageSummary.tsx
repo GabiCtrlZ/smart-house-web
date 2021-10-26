@@ -41,9 +41,9 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-}), { name: 'AgentCard' })
+}), { name: 'UsageSummary' })
 
-const AgentCard = (props: Props): JSX.Element => {
+const UsageSummary = (props: Props): JSX.Element => {
   const classes = useStyles(props)
   const history = useHistory()
   const {
@@ -86,4 +86,4 @@ const AgentCard = (props: Props): JSX.Element => {
   )
 }
 
-export default AgentCard
+export default UsageSummary

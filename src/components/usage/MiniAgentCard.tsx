@@ -6,7 +6,7 @@ import lightImg from '../../assets/icons/light-bulb.png'
 // types
 interface Props {
   type: 'ac' | 'light',
-  on: boolean,
+  active: boolean,
   onClick?: () => void,
 }
 
@@ -59,14 +59,14 @@ const MiniAgentCard = (props: Props): JSX.Element => {
   const classes = useStyles(props)
   const {
     type,
-    on,
+    active,
     onClick = () => { }, // eslint-disable-line
   } = props
 
   return (
     <div className={classes.root} onClick={onClick} >
       <img src={types[type].icon} alt={type} className={classes.logo} />
-      {on && <div className={classes.onLight} />}
+      {active && <div className={classes.onLight} />}
     </div>
   )
 }

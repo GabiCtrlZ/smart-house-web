@@ -48,6 +48,12 @@
       "error",
       2
     ],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+      }
+    ],
     "no-multiple-empty-lines": "error",
     "react/jsx-closing-bracket-location": "error",
     "no-use-before-define": "off",
@@ -55,7 +61,6 @@
     "react/prop-types": "off",
     "import/prefer-default-export": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "no-unexpected-multiline": "error",
     "no-duplicate-imports": "error",
     "react/jsx-tag-spacing": "error",

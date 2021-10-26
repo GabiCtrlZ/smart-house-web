@@ -6,7 +6,7 @@ import TimerIcon from '@mui/icons-material/Timer'
 // types
 interface Props {
   isTimer?: boolean,
-  on?: boolean,
+  active?: boolean,
   onClick?: () => void,
 }
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 const MainButton = (props: Props): JSX.Element => {
   const classes = useStyles(props)
   const {
-    on,
+    active,
     isTimer,
     onClick = () => { }, // eslint-disable-line
   } = props
@@ -41,7 +41,7 @@ const MainButton = (props: Props): JSX.Element => {
   let color: 'primary' | 'warning' | 'disabled' = 'primary'
 
   if (!isTimer) {
-    color = on ? 'warning' : 'disabled'
+    color = active ? 'warning' : 'disabled'
   }
 
   const sx = { width: `${mainButtonSize}px`, height: `${mainButtonSize}px` }

@@ -1,13 +1,13 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 import { makeStyles } from '@mui/styles'
 import { useHistory } from 'react-router'
 import classNames from 'classnames'
 import { Theme } from '@mui/material'
-import ProtectedRoute from '../../ProtectedRoute'
 import Consumption from '../../components/usage/Consumption'
 import UsageMeter from '../../components/usage/UsageMeter'
-import agents from '../../utils/agents'
 import MiniAgentCard from '../../components/usage/MiniAgentCard'
+import { agentsState } from '../../store'
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -47,9 +47,10 @@ const useStyles = makeStyles(({ spacing }: Theme) => ({
 const Usage = (): JSX.Element => {
   const classes = useStyles()
   const history = useHistory()
+  const agents = useRecoilValue(agentsState)
 
   return (
-    <ProtectedRoute>
+    <>
       <div className={classes.root} >
         <h2>Electricity Usage</h2>
         <div className={classNames(classes.agentContainer, classes.container)} >
@@ -61,17 +62,17 @@ const Usage = (): JSX.Element => {
         </div>
         <div className={classes.subHeader} >All Agents</div>
         <div className={classNames(classes.agentContainer, classes.agentFlow)} >
-          {agents.map(({ id, type, on }) => (
+          {agents.map(({ _id, type, active }) => (
             <MiniAgentCard
-              key={id}
+              key={_id}
               type={type}
-              on={on}
-              onClick={() => history.push(`/agent/${id}`)}
+              active={active}
+              onClick={() => history.push(`/agent/${_id}`)}
             />
           ))}
         </div>
       </div>
-    </ProtectedRoute>
+    </>
   )
 }
 

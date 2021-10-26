@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { makeStyles } from '@mui/styles'
 import { Theme, Typography } from '@mui/material'
 import { Box } from '@mui/system'
@@ -7,10 +8,9 @@ import acImg from '../../assets/icons/ac.png'
 import lightImg from '../../assets/icons/light-bulb.png'
 import offAcImg from '../../assets/icons/off-ac.png'
 import offLightImg from '../../assets/icons/off-light-bulb.png'
-import ProtectedRoute from '../../ProtectedRoute'
 import MainButton from '../../components/agentPage/MainButton'
 import secondsClock from '../../utils/seconds-clock'
-import agents from '../../utils/agents'
+import { agentsState } from '../../store'
 
 // style
 const useStyles = makeStyles(({ spacing }: Theme) => ({
@@ -57,8 +57,9 @@ const types = {
 const AgentPage = (): JSX.Element => {
   const classes = useStyles()
   const history = useHistory()
+  const agents = useRecoilValue(agentsState)
   const id = window.location.pathname.split('/')[2]
-  const agent = agents.find(a => a.id === id)
+  const agent = agents.find(a => a._id === id)
 
   const switched = agent ? agent.switched : new Date().toISOString()
 
@@ -80,30 +81,30 @@ const AgentPage = (): JSX.Element => {
 
   if (!agent) {
     return (
-      <ProtectedRoute>
+      <>
         <Typography>Agent not found</Typography>
-      </ProtectedRoute>
+      </>
     )
   }
 
   return (
-    <ProtectedRoute>
+    <>
       <div className={classes.root} >
         <Box >
           <h2>{agent.room}</h2>
           <Typography variant="h3" >{types[agent.type].name}</Typography>
         </Box>
         <img
-          src={agent.on ? types[agent.type].image : types[agent.type].offImage}
+          src={agent.active ? types[agent.type].image : types[agent.type].offImage}
           alt={agent.type} className={classes.logo}
         />
         <div className={classes.buttonsContainer} >
           <MainButton isTimer onClick={() => history.push(`/timer/${id}`)} />
           <Box sx={{ fontWeight: 'bold', width: '110px' }} >Power Saving Mode</Box>
-          <MainButton on={agent.on} />
+          <MainButton active={agent.active} />
         </div>
         <Box sx={{ marginBottom: 2 }} >
-          <Box sx={{ fontWeight: 'bold', }}>{agent.on ? 'On' : 'Off'} for the last</Box>
+          <Box sx={{ fontWeight: 'bold', }}>{agent.active ? 'On' : 'Off'} for the last</Box>
           <Box sx={{ color: 'secondary.main', fontWeight: 'bold', fontSize: '1.1rem' }} >
             {secondsClock(realTime)}
           </Box>
@@ -114,7 +115,7 @@ const AgentPage = (): JSX.Element => {
           </Box>
         </Box>
       </div>
-    </ProtectedRoute>
+    </>
   )
 }
 

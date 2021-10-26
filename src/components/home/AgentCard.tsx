@@ -11,7 +11,7 @@ interface Props {
   size: number,
   type: 'ac' | 'light',
   time: Date,
-  on: boolean,
+  active: boolean,
   onClick?: () => void,
 }
 
@@ -67,7 +67,7 @@ const AgentCard = (props: Props): JSX.Element => {
   const {
     type,
     time,
-    on,
+    active,
     onClick = () => { }, // eslint-disable-line
   } = props
 
@@ -78,12 +78,12 @@ const AgentCard = (props: Props): JSX.Element => {
       <div
         className={classes.time}
       >
-        {on ? 'On' : 'Off'} for {secondsHours(Math.floor((new Date().getTime() - time.getTime()) / 1000))}
+        {active ? 'On' : 'Off'} for {secondsHours(Math.floor((new Date().getTime() - time.getTime()) / 1000))}
       </div>
       <div>
-        <PowerSettingsNewIcon color={on ? 'warning' : 'disabled'} />
+        <PowerSettingsNewIcon color={active ? 'warning' : 'disabled'} />
       </div>
-      {on && <div className={classes.onLight} />}
+      {active && <div className={classes.onLight} />}
     </div>
   )
 }
