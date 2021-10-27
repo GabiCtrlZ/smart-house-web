@@ -87,11 +87,12 @@ const IMAGES_TO_LOAD = imagesNames.length
 
 // animation sequences
 const sleeping: sequenceType = [[sleeping1, 75], [sleeping2, 75]] // the second value represents the frames to wait
-const wakingUp: sequenceType = [[waking_up1, 7], [waking_up2, 7], [waking_up3, 7], [looking_left, 50], [looking_right, 50], [looking_left, 50], [waking_up2, 7], [blink2, 7], [waking_up2, 7], [looking_right, 50], [looking_left, 50]]
+const wakingUp: sequenceType = [[waking_up1, 4], [waking_up2, 4], [waking_up3, 4], [looking_left, 50], [looking_right, 50], [looking_left, 50], [waking_up2, 4], [blink2, 4], [waking_up2, 4], [looking_right, 50], [looking_left, 50]]
+const wakingUpFast: sequenceType = [[waking_up1, 4], [waking_up2, 4], [waking_up3, 4], [looking_left, 50], [looking_right, 50], [looking_left, 50]]
 const goingToSleep: sequenceType = [...wakingUp].reverse()
-const startBlowing: sequenceType = [[waking_up3, 7], [waking_up2, 7], [waking_up1, 7], [start_blowing1, 10], [start_blowing2, 10], [start_blowing3, 10]]
+const startBlowing: sequenceType = [[waking_up3, 4], [waking_up2, 4], [waking_up1, 4], [start_blowing1, 10], [start_blowing2, 10], [start_blowing3, 10]]
 const stopBlowing: sequenceType = [...startBlowing].reverse()
-const blowing: sequenceType = [[blowing1, 20], [blowing2, 20], [blowing3, 20], [blowing2, 20]]
+const blowing: sequenceType = [[blowing1, 15], [blowing2, 15], [blowing3, 15], [blowing2, 15]]
 
 // load images
 const images: IObjectKeys = {}
@@ -143,7 +144,7 @@ const Canvas = ({ active }: Props): JSX.Element => {
     // add images to queue
     if (!isInitial) {
       if (active) {
-        queue.push(wakingUp, startBlowing, blowing)
+        queue.push(wakingUpFast, startBlowing, blowing)
       }
       else {
         queue.push(stopBlowing, goingToSleep, sleeping)
