@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { makeStyles } from '@mui/styles'
 import { Theme, Typography } from '@mui/material'
+import toast from 'react-hot-toast'
 import { Box } from '@mui/system'
 import { useHistory } from 'react-router'
 import acImg from '../../assets/icons/ac.png'
@@ -90,12 +91,18 @@ const AgentPage = (): JSX.Element => {
           id,
         }),
       })
-      const data = await answer.json()
-      const { active, switched } = data
 
-      setAgents(agents.map(a => a._id === id ? { ...a, active, switched } : a))
+      const status = answer.status
+
+      if (status !== 200) throw new Error('An error occurred')
+
+      const data = await answer.json()
+      const { active, switched: agentSwitched } = data
+
+      setAgents(agents.map(a => a._id === id ? { ...a, active, switched: agentSwitched } : a))
     } catch (e) {
       console.log(e)
+      toast.error('An error occurred')
     }
     setLoading(false)
   }

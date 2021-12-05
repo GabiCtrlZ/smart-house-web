@@ -11,4 +11,5 @@ export type agentType = {
   room: string,
   active: boolean,
   switched: string,
+  online: boolean,
 }

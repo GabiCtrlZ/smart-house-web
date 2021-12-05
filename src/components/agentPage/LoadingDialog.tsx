@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog } from '@mui/material'
-import Loader from '../generic/Loader'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // types
 interface Props {
@@ -13,8 +13,16 @@ const LoadingDialog = (props: Props): JSX.Element => {
   } = props
 
   return (
-    <Dialog open={open} >
-      <Loader style={{ margin: 45 }} />
+    <Dialog
+      open={open}
+      PaperProps={{
+        style: {
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+        },
+      }}
+    >
+      <CircularProgress color="secondary" />
     </Dialog>
   )
 }
